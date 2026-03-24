@@ -18,20 +18,11 @@ qgis-ws/
 
 ## Architecture
 
-```
- Client (browser)
-       │
-       │ HTTP :8080
-       ▼
- ┌────────────┐      FastCGI :5555      ┌──────────────┐
- │   nginx    │ ─────────────────────▶  │  qgis-server │
- │  (alpine)  │                         │  (QGIS FCGI) │
- └────────────┘                         └──────────────┘
-                                               │
-                                               │ reads (ro)
-                                               ▼
-                                         /data/osm.qgs
-                                     (example-projects/)
+```mermaid
+graph LR
+    Client["Client (browser)"] -- "HTTP :8080" --> Nginx["nginx (alpine)"]
+    Nginx -- "FastCGI :5555" --> QGIS["qgis-server (QGIS FCGI)"]
+    QGIS -- "reads (ro)" --> Data["/data/osm.qgs (example-projects/)"]
 ```
 
 - **nginx** listens on port 8080 and forwards requests at `/qgis-server` via FastCGI to the QGIS Server container.
