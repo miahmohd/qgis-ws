@@ -9,7 +9,9 @@ services:
       - ./example-projects:/data:ro
     environment:
       LANG: en_EN.UTF-8
-      QGIS_PROJECT_FILE: /data/osm.qgs
+      # This is the default project to serve, if it so not set the project must be specified by the MAP query param
+      # https://docs.qgis.org/3.44/en/docs/server_manual/services/basics.html#map
+      QGIS_PROJECT_FILE: /data/world.qgs
       QGIS_SERVER_LOG_LEVEL: 0 # INFO (log all requests)
       DEBUG: 1
   nginx:
